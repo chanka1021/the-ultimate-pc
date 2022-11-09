@@ -15,12 +15,14 @@ app.use(express.json());
 
 // Connect to mongoDB server
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex:true, useUnifiedTopology: true});
+mongoose.connect(uri, {useNewUrlParser: true});
 const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
 
+const userRouter = require('./routes/users')
+app.use('/users',userRouter)
 
 app.listen(port,()=>{
     console.log(`server runuin on port : ${port}`);
